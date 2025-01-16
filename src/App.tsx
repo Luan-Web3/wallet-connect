@@ -1,35 +1,97 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import React, { useEffect, useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+import Button from './components/Button';
+import AddressLogged from './components/AddressLogged';
+import Modal from './components/Modal';
+import WalletIcon from './assets/wallet.svg';
+import MetamaskIcon from './assets/metamask.svg';
+
+const App: React.FC = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [account, setAccount] = useState<string | null>(null);
+  const [icon, setIcon] = useState<string | null>(null);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
+  useEffect(() => {
+    if (typeof window.ethereum !== 'undefined') {
+      const checkAccount = async () => {
+        if (typeof window.ethereum === 'undefined') {
+          console.log('MetaMask não está instalada no navegador.');
+          return;
+        }
+
+        try {
+          const accounts = await window.ethereum.request({
+            method: 'eth_accounts', // Método para verificar contas ativas
+          });
+
+          if (accounts.length > 0) {
+            setAccount(accounts[0]);
+            setIcon(MetamaskIcon);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      checkAccount();
+    }
+  }, []);
+
+  const connectMetamask = async () => {
+    if (typeof window.ethereum === 'undefined') {
+      window.open('https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn', '_blank');
+      return;
+    }
+
+    try {
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+
+      setAccount(accounts[0]);
+      setIcon(MetamaskIcon);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      closeModal();
+    }
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      {account ? (
+        <AddressLogged
+          address={account}
+          icon={icon || ''}
+          onClick={() => setAccount(null)}
+        />
+      ) : (
+        <Button
+          icon={WalletIcon}
+          label="Connect a wallet"
+          width="200px"
+          onClick={openModal}
+        />
+      )}
 
-export default App
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      >
+        <h1 className="modal-header">Connect wallet</h1>
+        <Button
+          icon={MetamaskIcon}
+          label="Metamask"
+          width="320px"
+          onClick={connectMetamask}
+        />
+      </Modal>
+    </>
+  );
+};
+
+export default App;
