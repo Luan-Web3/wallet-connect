@@ -1,50 +1,57 @@
-# React + TypeScript + Vite
+Wallet Connect
+===========================
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![GitHub repo size](https://img.shields.io/github/repo-size/Luan-Web3/wallet-connect?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/Luan-Web3/wallet-connect?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/Luan-Web3/wallet-connect?style=for-the-badge)
 
-Currently, two official plugins are available:
+This project is a React application designed to integrate with digital wallets, enabling interaction with blockchain-based solutions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Live Demo
 
-## Expanding the ESLint configuration
+You can access the live version of the application here:  
+[**Wallet Connect Live Demo**](https://wallet-connect-bice-iota.vercel.app/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Prerequisites
 
-- Configure the top-level `parserOptions` property like this:
+Before you begin, make sure you meet the following requirements:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- [Node 18.20^](https://nodejs.org/pt/download)
+
+## Instalation
+
+```
+git clone https://github.com/Luan-Web3/wallet-connect.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+cd wallet-connect
+```
+
+```
+npm install
+```
+
+```
+npm run dev
+```
+
+## Connected Wallets
+
+- [x] Metamask
+
+
+## License
+
+<sup>
+Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
+2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
+</sup>
+
+<br>
+
+<sub>
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in this crate by you, as defined in the Apache-2.0 license, shall
+be dual licensed as above, without any additional terms or conditions.
+</sub>
